@@ -1,0 +1,821 @@
+/* ملف styles.css */
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap');
+
+/* ===========================
+   متغيرات CSS
+=========================== */
+:root {
+  --primary-color: #1565C0;
+  --secondary-color: #00E5FF;
+  --accent-color: #2962FF;
+  --text-color: #0D47A1;
+  --light-text: #f5f5f5;
+  --correct-color: #4CAF50;
+  --wrong-color: #F44336;
+  --background-light: #E3F2FD;
+  --card-bg: #FFFFFF;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+
+  /* Z-index system */
+  --z-background: -1;
+  --z-base: 1;
+  --z-overlay: 50;
+  --z-modal: 100;
+}
+
+/* ===========================
+   الأنيميشن الأساسية
+=========================== */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes confetti {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes timer-tick {
+  0%   { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 283; }
+}
+
+/* ===========================
+   Accessibility - تقليل الحركة
+=========================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===========================
+   التنسيقات العامة
+=========================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Tajawal', sans-serif;
+}
+
+body {
+  background-color: var(--background-light);
+  color: var(--text-color);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.6;
+}
+
+.background-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--background-light) 0%, #BBDEFB 100%);
+  z-index: var(--z-background);
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  position: relative;
+}
+
+/* ===========================
+   صفحة الترحيب
+=========================== */
+.welcome-page {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.header {
+  margin-bottom: 2.5rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+  font-weight: 900;
+  text-shadow: 2px 2px 4px var(--shadow-color);
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: var(--accent-color);
+  font-weight: 500;
+}
+
+.welcome-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.welcome-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: var(--card-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px var(--shadow-color);
+  overflow: hidden;
+  border: 5px solid var(--secondary-color);
+  animation: float 4s ease-in-out infinite;
+}
+
+.archaeologist-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.welcome-form {
+  background-color: var(--card-bg);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px var(--shadow-color);
+  width: 100%;
+  max-width: 500px;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  text-align: right;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
+
+.name-input {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #BBDEFB;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s;
+  text-align: center;
+}
+
+.name-input:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.3);
+}
+
+.name-input:focus-visible {
+  outline: 3px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+.test-options,
+.game-modes {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  justify-content: center;
+}
+
+.test-option-btn,
+.game-mode-btn {
+  flex: 1;
+  background: none;
+  border: 2px solid #BBDEFB;
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 500;
+}
+
+.test-option-btn:focus-visible,
+.game-mode-btn:focus-visible {
+  outline: 3px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+.test-option-btn.active,
+.game-mode-btn.active {
+  border-color: var(--secondary-color);
+  background-color: rgba(0, 229, 255, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+.test-option-btn .icon,
+.game-mode-btn .icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.start-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 5px 15px rgba(21, 101, 192, 0.3);
+}
+
+.start-btn:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(21, 101, 192, 0.4);
+}
+
+.start-btn:focus-visible {
+  outline: 3px solid var(--secondary-color);
+  outline-offset: 2px;
+}
+
+/* ===========================
+   صفحة الاختبار
+=========================== */
+.test-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.test-header {
+  margin-bottom: 2rem;
+}
+
+.student-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--primary-color);
+}
+
+.score-display {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-weight: 700;
+}
+
+.progress-container {
+  background-color: #BBDEFB;
+  border-radius: 10px;
+  height: 15px;
+  margin-bottom: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+.progress-text {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--accent-color);
+  font-weight: 500;
+}
+
+.question-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.question-card {
+  background-color: var(--card-bg);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 8px 25px var(--shadow-color);
+  margin-bottom: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.35s ease forwards;
+}
+
+.question {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: var(--primary-color);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.options-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.option {
+  background-color: white;
+  border: 2px solid #BBDEFB;
+  border-radius: 10px;
+  padding: 1.2rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+  font-weight: 500;
+}
+
+.option:hover:not(:disabled):not([aria-disabled="true"]) {
+  border-color: var(--accent-color);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+.option:focus-visible {
+  outline: 3px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+.option.correct {
+  background-color: var(--correct-color);
+  color: white;
+  border-color: var(--correct-color);
+}
+
+.option.wrong {
+  background-color: var(--wrong-color);
+  color: white;
+  border-color: var(--wrong-color);
+}
+
+/* حالة الـ disabled بعد الاختيار */
+.option:disabled,
+.option[aria-disabled="true"] {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+.option.correct:disabled,
+.option.correct[aria-disabled="true"],
+.option.wrong:disabled,
+.option.wrong[aria-disabled="true"] {
+  opacity: 1;
+}
+
+.typing-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.answer-input {
+  width: 100%;
+  padding: 1.2rem;
+  border: 2px solid #BBDEFB;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.answer-input:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.3);
+}
+
+.answer-input:focus-visible {
+  outline: 3px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+.check-answer-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.check-answer-btn:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-2px);
+}
+
+.check-answer-btn:focus-visible {
+  outline: 3px solid var(--secondary-color);
+  outline-offset: 2px;
+}
+
+.feedback-message {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-top: 1rem;
+  min-height: 1.5rem;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.feedback-message.correct {
+  color: var(--correct-color);
+}
+
+.feedback-message.wrong {
+  color: var(--wrong-color);
+}
+
+.next-btn {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 10px;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 5px 15px rgba(0, 229, 255, 0.3);
+}
+
+.next-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 229, 255, 0.4);
+}
+
+.next-btn:focus-visible {
+  outline: 3px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.next-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ===========================
+   Timer SVG (اختياري)
+=========================== */
+.timer-circle {
+  animation: timer-tick linear forwards;
+  transform-origin: center;
+  transform: rotate(-90deg);
+}
+
+/* ===========================
+   صفحة النتائج
+=========================== */
+.result-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.result-content {
+  background-color: var(--card-bg);
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  box-shadow: 0 15px 40px var(--shadow-color);
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+  overflow: hidden;
+}
+
+.trophy-container {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.trophy {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.star {
+  position: absolute;
+  font-size: 1.5rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+.star:nth-child(1) {
+  top: -20px;
+  left: 20%;
+  animation-delay: 0s;
+}
+
+.star:nth-child(2) {
+  top: -10px;
+  right: 20%;
+  animation-delay: 0.5s;
+}
+
+.star:nth-child(3) {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  animation-delay: 1s;
+}
+
+.result-title {
+  font-size: 2rem;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.student-result-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-color);
+  margin-bottom: 1.5rem;
+}
+
+.score-display-final {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.final-score {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.result-message {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.result-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 2px solid transparent;
+}
+
+.action-btn:focus-visible {
+  outline: 3px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+.play-again-btn {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.play-again-btn:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(21, 101, 192, 0.3);
+}
+
+.change-test-btn {
+  background-color: white;
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.change-test-btn:hover {
+  background-color: #E3F2FD;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(21, 101, 192, 0.2);
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  animation: confetti 3s ease-in-out forwards;
+  z-index: var(--z-overlay);
+}
+
+/* ===========================
+   التصميم المتجاوب
+=========================== */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .welcome-form {
+    padding: 1.5rem;
+  }
+
+  .test-options,
+  .game-modes {
+    flex-direction: column;
+  }
+
+  .question {
+    font-size: 1.5rem;
+  }
+
+  .result-content {
+    padding: 2rem 1rem;
+  }
+
+  .result-title {
+    font-size: 1.7rem;
+  }
+
+  .result-actions {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.7rem;
+  }
+
+  .welcome-image {
+    width: 150px;
+    height: 150px;
+  }
+
+  .question {
+    font-size: 1.3rem;
+  }
+
+  .option {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+
+  .trophy {
+    font-size: 4rem;
+  }
+
+  .result-title {
+    font-size: 1.5rem;
+  }
+
+  .student-result-name {
+    font-size: 1.3rem;
+  }
+}
+/* ===========================
+   تصميم أزرار الخيارات (تم التعديل لتتطابق مع الجافاسكريبت)
+=========================== */
+.options-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.option-btn {
+  background-color: white;
+  border: 2px solid #BBDEFB;
+  border-radius: 10px;
+  padding: 1.2rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+  font-weight: 500;
+  /* إضافة اللون الأساسي للنص حتى يكون واضحاً */
+  color: var(--text-color); 
+}
+
+.option-btn:hover:not(:disabled):not([aria-disabled="true"]) {
+  border-color: var(--accent-color);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+.option-btn:focus-visible {
+  outline: 3px solid var(--accent-color);
+  outline-offset: 2px;
+}
+
+.option-btn.correct {
+  background-color: var(--correct-color);
+  color: white;
+  border-color: var(--correct-color);
+}
+
+.option-btn.wrong {
+  background-color: var(--wrong-color);
+  color: white;
+  border-color: var(--wrong-color);
+}
+
+/* حالة الـ disabled بعد الاختيار لتجنب النقر المتعدد */
+.option-btn:disabled,
+.option-btn[aria-disabled="true"] {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+.option-btn.correct:disabled,
+.option-btn.correct[aria-disabled="true"],
+.option-btn.wrong:disabled,
+.option-btn.wrong[aria-disabled="true"] {
+  opacity: 1;
+}
